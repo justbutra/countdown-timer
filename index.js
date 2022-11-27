@@ -13,6 +13,7 @@
 // 4. Выводим на страницу полученные значения в блок .numbers в формате 0:0:0:0
 // 5. Загружаем изменения на GIT, создаем pull request
 
+
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,55 +25,72 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.querySelector('.input');
     const output = document.querySelector('.output');
     const complete = document.querySelector('.complete');
+    const numbers = document.querySelector('.numbers');
+    let titleDate = document.querySelector('#title-date');
 
 
     let timerId = null;
 
+    //Функция добавления класса
+    function addClassHide(variable) {
+        return variable.classList.add('hide');
+    }
+
+    //Функция удаления класса
+    function removeClassHide(variable) {
+        return variable.classList.remove('hide');
+    }
+    //Старт отсчета
     function startAction() {
-        h1.textContent = 'Привет таймер пошел';
+        h1.textContent = `Привет таймер ${titleDate.value} пошел`;
 
-        btnStart.classList.add('hide');
-        btnReset.classList.remove('hide');
-        input.classList.add('hide');
-        output.classList.remove('hide');
+        addClassHide(btnStart);
+        removeClassHide(btnReset);
+        addClassHide(input);
+        removeClassHide(output);
+
+        deadLine = moment(deadLine.value);
+        titleDate = titleDate.value;
+        console.log(deadLine)
+
         if (!deadLine) {
+            h1.textContent = 'Введите корректную дату!';
+            addClassHide(output);
             return
-        } else {
-            deadLine = moment(deadLine.value);
-
-            function CountdownTimer() {
-                const now = moment();
-
-                if (deadLine.diff(now) <= 0) {
-                    clearInterval(timerId);
-                    return;
-                }
-
-                const days = deadLine.diff(now, 'days');
-                const hours = deadLine.diff(now, 'hours') % 24;
-                const minutes = deadLine.diff(now, 'minutes') % 60;
-                const seconds = deadLine.diff(now, 'seconds') % 60;
-                console.log(days, hours, minutes, seconds);
-
-                if (deadLine.value < now) {
-
-                }
-            }
         }
 
-
         // Функция обратного отчета
+        function CountdownTimer() {
+            const now = moment();
+
+            if (deadLine.diff(now) <= 0) {
+                addClassHide(output);
+                removeClassHide(complete);
+                h1.textContent = ''
+                complete.textContent = `${titleDate} Завершился ${deadLine.format('DD.MM.YYYY')}`
+                clearInterval(timerId);
+                return;
+            }
+
+            const days = deadLine.diff(now, 'days');
+            const hours = deadLine.diff(now, 'hours') % 24;
+            const minutes = deadLine.diff(now, 'minutes') % 60;
+            const seconds = deadLine.diff(now, 'seconds') % 60;
+
+            numbers.textContent = `
+             ${days < 10 ? '0' + days : days}:
+             ${hours < 10 ? '0' + hours : hours}:
+             ${minutes < 10 ? '0' + minutes : minutes}:
+             ${seconds < 10 ? '0' + seconds : seconds}`;
 
 
+        }
 
-        // timerId = setInterval(CountdownTimer, 1000);
+        timerId = setInterval(CountdownTimer, 1000);
+        CountdownTimer(timerId);
 
     }
 
-
-
     btnStart.addEventListener('click', startAction);
-
-
 
 });
