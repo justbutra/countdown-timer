@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timer</title>
+    <title>CountDownTimer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.js"
+        integrity="sha512-NXopZjApK1IRgeFWl6aECo0idl7A+EEejb8ur0O3nAVt15njX9Gvvk+ArwgHfbdvJTCCGC5wXmsOUXX+ZZzDQw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://kit.fontawesome.com/3b60ca4704.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
@@ -20,9 +23,9 @@
             <label for="">Заголовок для таймера</label>
             <input type="text" id="title-date" placeholder="Заголовок">
 
-            
+
             <label for="">Дата для отсчета</label>
-            <input type="date" id="date" name="date" placeholder="06/06/2023"/>
+            <input type="date" id="date" name="date" placeholder="06/06/2023" />
         </div>
         <button class="btn" id="btn">Начать</button>
 
@@ -37,7 +40,7 @@
                 <div class="numbers">0:0:0:0</div>
             </div>
         </div>
-        
+
         <h2 class="complete hide"></h2>
         <button class="btn btn-reset hide" id="btn-reset">Сбросить</button>
     </div>
